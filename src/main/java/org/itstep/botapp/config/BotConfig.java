@@ -34,7 +34,7 @@ public class BotConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoderBean() {
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }
