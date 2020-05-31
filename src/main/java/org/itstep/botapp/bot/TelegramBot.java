@@ -3,16 +3,14 @@ package org.itstep.botapp.bot;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.itstep.botapp.model.Equipment;
 import org.itstep.botapp.service.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -31,7 +29,6 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-
         try {
             execute(chatService.distributor(update));
         } catch (TelegramApiException e) {
@@ -39,6 +36,16 @@ public class TelegramBot extends TelegramLongPollingBot {
         }
     }
 
+    public void sendChangePrice(Equipment equipment){
+        List<SendMessage> sendMessageList = chatService.sendChangePrice(equipment);
+        sendMessageList.forEach(s -> {
+            try {
+                execute(s);
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
+            }
+        });
+    }
 
     @Override
     public String getBotUsername() {

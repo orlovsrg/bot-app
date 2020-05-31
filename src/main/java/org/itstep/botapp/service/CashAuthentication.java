@@ -17,4 +17,8 @@ public class CashAuthentication {
        chatMap.put(chatId, chatState);
    }
 
+   public void clearCache(long charId){
+       chatMap.remove(charId);
+   }
+
 }

@@ -1,6 +1,7 @@
 package org.itstep.botapp.repository;
 
 import org.itstep.botapp.entity.Chat;
+import org.itstep.botapp.entity.UserMessage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -24,6 +25,11 @@ public interface ChatRepository extends CrudRepository<Chat, Long> {
     @Query("update Chat c set c.statusChat = :statusChat where c.chatId = :chatId")
     void updateStatus(@Param("statusChat") String statusChat, @Param("chatId") long chatId);
     List<Chat> findAll();
+    Chat findChatByUserId(long userId);
+
+
+
+
 
 
 

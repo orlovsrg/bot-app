@@ -4,8 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.itstep.botapp.bot.ChatState;
+import org.telegram.telegrambots.meta.api.objects.User;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @ToString
 @Getter
@@ -21,6 +23,9 @@ public class Chat implements Comparable<Chat>{
     private String password;
     private Long userId;
     private String statusChat = "non";
+
+    @OneToMany(mappedBy = "chat")
+    private Set<UserMessage> userMessageSet;
 
     @Override
     public int compareTo(Chat o) {
