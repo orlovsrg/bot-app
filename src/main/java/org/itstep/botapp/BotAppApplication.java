@@ -8,8 +8,10 @@ import org.telegram.telegrambots.ApiContextInitializer;
 public class BotAppApplication {
 
     public static void main(String[] args) {
-        ApiContextInitializer.init();
         SpringApplication.run(BotAppApplication.class, args);
+
     }
+
+
 
 }
