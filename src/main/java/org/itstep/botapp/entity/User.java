@@ -21,6 +21,6 @@ public class User {
     private Date birthDay;
     private String login;
     private String password;
-    private int phoneNumber;
+    private Long phoneNumber;
     private Date createDate;
 }

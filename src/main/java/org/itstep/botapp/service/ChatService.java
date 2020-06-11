@@ -33,14 +33,15 @@ import java.util.Objects;
 @Slf4j
 @Service
 public class ChatService {
+
     private final String help = EmojiParser.parseToUnicode(
-            "Для того , что б начать пользоваться этим чатом :neckbeard:\n" +
-                    "вам необходимо пройти регистрацию на сайте homcom.online :couple:\n" +
-                    "где вы сможете отслеживать цены на телефоновы :iphone: планшеты :scroll: и ноутбуки :computer:\n" +
+            "Для того, что б начать пользоваться всеми возможностями этого бота :hatched_chick:\n" +
+                    "вам необходимо пройти регистрацию на сайте http://176.114.11.149:8080 :couple:\n" +
+                    "где вы сможете отслеживать цены на телефоноы :iphone: телевизоры :tv: и ноутбуки :computer:\n" +
                     "После чего нажмите в чате \"Начать\" и пройдите аутентификацию под тем пользователем, \n" +
                     "под которым вы зарегестрировались на сайте :ok_hand: :+1:");
 
-    private final String about = EmojiParser.parseToUnicode("Нашь сайт homcom.online :dancers:\n" +
+    private final String about = EmojiParser.parseToUnicode("Нашь сайт http://176.114.11.149:8080 :dancers:\n" +
             "Мы остлеживаем цены на востребованные позиции эллектронной техники\n" +
             "в популярных магазинах Украины. Вы сможете видеть в каком магазине дешевле\n" +
             "и подписаться на изменение цены товара. Пройдя регистрацию на нашем сайте,\n" +
@@ -82,7 +83,7 @@ public class ChatService {
 
         usersId.forEach(userId -> {
             long chatId = chatRepository.findChatByUserId(userId).getChatId();
-            if (chatId > 0){
+            if (chatId > 0) {
                 stringBuilder.append("Тип: " + equipmentValidation.validTypeProduct(equipment.getType()) + "\n");
                 stringBuilder.append("Название: " + equipment.getTitle() + "\n");
                 stringBuilder.append("НОВАЯ ЦЕНА!!!: " + equipment.getPrice() + "\n");
@@ -91,7 +92,7 @@ public class ChatService {
                 SendMessage sendMessage = new SendMessage();
                 sendMessage.setChatId(chatId);
                 sendMessage.setText(String.valueOf(stringBuilder));
-               sendMessageList.add(sendMessage);
+                sendMessageList.add(sendMessage);
             }
         });
         return sendMessageList;
@@ -176,9 +177,9 @@ public class ChatService {
                     cashAuthentication.setStatusChatId(chatId, ChatState.CHECK_PASSWORD);
                     log.info("Chat is: {}", chat);
 
-                    if (chat.getLogin().equals("test")) {
+                    if (chat.getLogin().equals("admin")) {
                         List<Chat> chatList = chatRepository.findAll();
-                        StringBuilder stringBuilder = new StringBuilder("Здравствуйте Сергей Геннадьевич!\nВот Ваши пользователи ботом:\n-\n");
+                        StringBuilder stringBuilder = new StringBuilder("Пользователи ботом:\n-\n");
                         chatList.forEach(c -> {
 
                             stringBuilder.append("Login: " + c.getLogin() + "\n" +
@@ -286,7 +287,6 @@ public class ChatService {
         List<List<InlineKeyboardButton>> listRows = new ArrayList<>();
         List<InlineKeyboardButton> rowFirst = new ArrayList<>();
         rowFirst.add(new InlineKeyboardButton().setText(EmojiParser.parseToUnicode("Мои подписки :ledger:")).setCallbackData("mySubscriptions"));
-//        rowFirst.add(new InlineKeyboardButton().setText("На что изменилась цена").setCallbackData("changePrice"));
         List<InlineKeyboardButton> rowSecond = new ArrayList<>();
         rowSecond.add(new InlineKeyboardButton().setText(EmojiParser.parseToUnicode("Выйти :checkered_flag:")).setCallbackData("logout"));
         listRows.add(rowFirst);
@@ -294,7 +294,6 @@ public class ChatService {
         keyboardMarkup.setKeyboard(listRows);
         sendMessage.setReplyMarkup(keyboardMarkup);
     }
-
 
 }
 
